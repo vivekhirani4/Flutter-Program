@@ -1,0 +1,59 @@
+import 'package:flutter/material.dart';
+
+class StaticList extends StatefulWidget {
+  const StaticList({super.key});
+
+  @override
+  State<StaticList> createState() => _StaticListState();
+}
+
+class _StaticListState extends State<StaticList> {
+
+  Future? myfuture;
+
+  Future<List<String>> fetchdata() async{
+    final List<String> myfuturelist = <String>[
+      "c",
+      "android",
+      "java",
+      "PHP",
+      "python",
+      "c++"
+    ];
+
+    await Future.delayed(Duration(seconds: 4));
+    return myfuturelist;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    myfuture = fetchdata();
+    super.initState();
+    
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<dynamic>(
+      future: myfuture,
+      builder: (context, snapshot) {
+        if(!snapshot.hasData){
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return Scaffold(
+          body: ListView.builder(
+            itemCount: snapshot.data.length,
+            itemBuilder: (context, index) {
+              return Card(
+                child: ListTile(
+                  title: Text(snapshot.data[index]),
+                ),
+              );            
+            }),
+        );
+      });
+  }
+}

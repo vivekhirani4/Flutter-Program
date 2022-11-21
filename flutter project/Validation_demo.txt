@@ -1,0 +1,86 @@
+import 'package:flutter/material.dart';
+
+void main(){
+  runApp(Myapp());
+}
+
+class Myapp extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.grey
+      ),
+      home: Validation_demo(),
+    );
+  }
+}
+
+class Validation_demo extends StatefulWidget {
+  const Validation_demo({super.key});
+
+  @override
+  State<Validation_demo> createState() => _Validation_demoState();
+}
+
+class _Validation_demoState extends State<Validation_demo> {
+
+  TextEditingController txt1 = new TextEditingController();
+
+  var value , valid="";
+  var length;
+
+  showSnackBar(String massage){
+    var showSnackBar = SnackBar(
+      content: Text(massage),
+      backgroundColor: Colors.green,
+      behavior: SnackBarBehavior.floating,
+      duration: const Duration(seconds: 4),);
+    ScaffoldMessenger.of(context).showSnackBar(showSnackBar);
+  }
+
+  void validOrNot(){
+
+    value = txt1.text;
+    setState(() {
+       length = value.length;
+      if(length >= 5)
+      {
+        valid = "it is valid";
+      }
+      else{
+        valid = "it's not valid";
+      }
+      showSnackBar(valid);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Validation of Textfield value"),
+        centerTitle: true,
+      ),
+
+      body: Padding(padding: EdgeInsets.all(15),
+        child: Column(
+          children: [
+            TextField(
+              controller: txt1,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8)
+                )
+              ),
+            ),
+            ElevatedButton(onPressed: validOrNot,
+             child: Text("click")
+            ),
+            Text("$valid"),
+          ],
+        ),
+      ),
+    );
+  }
+}

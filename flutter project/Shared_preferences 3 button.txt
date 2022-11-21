@@ -1,0 +1,109 @@
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MyHomePage(title: 'Shared Preferences'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+
+  var myText = "";
+
+  void _savedata() async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+     await pref.setInt('counter', 10);
+     setState(() {
+       myText = "Saved";
+     });
+  }
+
+  void _getdata() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    int? counter = pref.getInt('counter');
+    setState(() {
+      myText = "Get data $counter";
+    });
+  }
+
+  void _removedata () async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.remove('counter');
+
+    setState(() {
+      myText = "Removed";
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: _savedata,
+               child: const Text("Save"),
+               style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green
+               ),
+            ),
+
+            const SizedBox(height: 20,),
+
+            ElevatedButton(
+              onPressed: _getdata,
+                child: Text("Get dat"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue
+                ),
+            ),
+
+            const SizedBox(height: 20,),
+
+            ElevatedButton(
+              onPressed: _removedata,
+               child: const Text("Remove data",),
+               style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red
+               ),
+            ),
+
+            const SizedBox(height: 20,),
+
+            Text("$myText")
+          ]
+      ),
+      )
+       // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}

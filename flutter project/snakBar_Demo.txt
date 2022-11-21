@@ -1,0 +1,54 @@
+import 'package:flutter/material.dart';
+
+void main()
+{
+  runApp(Myapp());
+}
+
+class Myapp extends StatelessWidget {
+  const Myapp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.green
+      ),
+      home: Snakbar_Demo(),
+    );
+  }
+}
+
+class Snakbar_Demo extends StatefulWidget {
+  const Snakbar_Demo({super.key});
+
+  @override
+  State<Snakbar_Demo> createState() => _Snakbar_DemoState();
+}
+
+class _Snakbar_DemoState extends State<Snakbar_Demo> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("SnackBar Example"),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+          Text("SnackBar demo"),
+
+          ElevatedButton(onPressed: (){
+            var snakBar = const SnackBar(content: Text("Hello i'm snakbar"));
+            ScaffoldMessenger.of(context).showSnackBar(snakBar);
+          },
+          child: Text("Show snakBar"),
+          )
+        ],
+        ),
+         
+        )
+
+    );
+  }
+}

@@ -1,0 +1,41 @@
+import 'package:flutter/material.dart';
+
+class ListViewBuilder extends StatefulWidget {
+  const ListViewBuilder({super.key});
+
+  @override
+  State<ListViewBuilder> createState() => _ListViewBuilderState();
+}
+
+class _ListViewBuilderState extends State<ListViewBuilder> {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: EdgeInsets.fromLTRB(0, 10, 0, 5),
+      children: [
+        ListTile(
+          leading: Icon(Icons.wb_sunny),
+          title: const Text("Sun",
+          style: TextStyle(
+            fontSize: 20
+            ),
+          ),
+          onTap: () {
+            print("tap on sun..");
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.money_off ),
+          title: Text("money",
+          style: TextStyle(
+            fontSize: 20
+            ),
+          ),
+          onTap: () {
+            print("Money..");
+          },
+         )
+      ],
+    );
+  }
+}

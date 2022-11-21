@@ -1,0 +1,91 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
+import 'package:flutter/material.dart';
+
+void main(){
+  runApp(Myapp());
+}
+
+class Myapp extends StatelessWidget {
+  const Myapp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.green
+      ),
+      home: OddEven_Check(),
+    );
+  }
+}
+
+class OddEven_Check extends StatefulWidget {
+  const OddEven_Check({super.key});
+
+  @override
+  State<OddEven_Check> createState() => _OddEven_CheckState();
+}
+
+class _OddEven_CheckState extends State<OddEven_Check> {
+  
+  TextEditingController txt1 = new TextEditingController();
+  var ans;
+  var text;
+
+  void _showOddEven(){
+    var n = int.parse(txt1.text);
+    setState(() {
+      if(n % 2 == 0){
+        ans = n;
+        text = "is even Number";
+      }
+      else{
+        ans = n;
+        text = "is odd Number";
+      }
+    }
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Check number Odd or Even",),
+      ),
+      body: Padding(padding: EdgeInsets.all(15),
+      child: Column(
+        children: [
+          TextField(controller: txt1,
+          decoration: InputDecoration(
+            labelText: "Enter the Number",
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10)
+            )
+          ),
+          ),
+
+          const SizedBox(height: 25,),
+          
+          ElevatedButton(
+            onPressed: _showOddEven,
+             child: const Text("Check",
+             style: TextStyle(
+              fontSize: 25
+            ),),
+          ),
+
+          const SizedBox(height: 15,),
+            
+          Text('${ans} ${text}',
+          style: const TextStyle(
+            fontSize: 20
+          ),)
+        ]
+      ),
+      ),
+    );
+  }
+}
+

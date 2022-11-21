@@ -1,0 +1,74 @@
+
+
+import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+class FakestoreApi extends StatefulWidget {
+  const FakestoreApi({super.key});
+
+  @override
+  State<FakestoreApi> createState() => _FakestoreApiState();
+}
+
+class _FakestoreApiState extends State<FakestoreApi> {
+
+  Future? myfuture;
+  var storelist = [];
+
+  Future<List> fetchdata() async{
+    try{
+    var url = Uri.https('fakestoreapi.com','products');
+    var response = await http.get(url);
+    print("response code = ${response.statusCode}");
+    print("response body = ${response.body}");
+
+    storelist = json.decode(response.body);
+    return storelist;
+    }
+    catch(error){
+      throw error;
+    }
+
+  } 
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    myfuture = fetchdata();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<dynamic>(
+      future: myfuture,
+      builder: (context, snapshot) {
+        if(!snapshot.hasData){
+          return Center(child: CircularProgressIndicator(),);
+        }
+        if(snapshot.hasError){
+          return Center(child: Text("it has some error"),);
+        }
+        return Scaffold(
+          body: ListView.builder(
+            itemCount: snapshot.data.length,
+            itemBuilder: (context, index) {
+              return Card(
+                child: ListTile(
+                  leading: Image.network(snapshot.data[index]['image'],
+                  width: 100,),
+                  title: Text(snapshot.data[index]['title'],
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  trailing: Text('\$${snapshot.data[index]['price'].toString()}'),
+                ),
+              );
+            },),
+        );
+      },
+    );
+  }
+}

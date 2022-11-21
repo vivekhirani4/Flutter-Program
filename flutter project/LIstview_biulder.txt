@@ -1,0 +1,44 @@
+import 'package:flutter/material.dart';
+
+
+void main(){
+  runApp(Myapp());
+}
+
+class Myapp extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    return MaterialApp(
+      title: "ListView app",
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Listview Biulder"),
+        ),
+        body: const HomePage(),
+      ),
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        itemCount: 10,
+        itemBuilder: (context, index) {
+         return const ListTile(
+          title: Text("Vivek Hirani"),
+          leading: Icon(Icons.add),
+          trailing: Icon(Icons.add),
+         );
+        },
+      );
+  }
+}

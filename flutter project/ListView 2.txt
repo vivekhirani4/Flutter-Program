@@ -1,0 +1,65 @@
+import 'package:flutter/material.dart';
+
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
+
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+
+  TextEditingController _textController = TextEditingController();
+
+  void _handelSubmitted(String text){
+
+    _textController.clear();
+
+  }
+
+  Widget _textComposerWidget() {
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 8.0),
+          child: Row(
+            children: [
+              Flexible(
+                child: TextField(
+                  controller: _textController,
+                  onSubmitted: _handelSubmitted,
+                  decoration: InputDecoration(
+                    hintText: "Send a message"
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 4.0),
+                child: IconButton(
+                  icon: Icon(Icons.send),
+                  color: Colors.blue,
+                  onPressed: () { 
+                    _handelSubmitted(_textController.text);
+                   },
+                ),
+              )
+            ],
+          ), 
+        ),
+        Container(
+          child: Row(
+            children: [
+              
+            ],
+          ),
+        )
+      ],
+      
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _textComposerWidget();
+  }
+}

@@ -1,0 +1,79 @@
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class SecondTask extends StatefulWidget {
+  const SecondTask({super.key});
+
+  @override
+  State<SecondTask> createState() => _SecondTaskState();
+}
+
+class _SecondTaskState extends State<SecondTask> {
+
+  String uname = "";
+
+  void _getvalue() async{
+    SharedPreferences sref = await SharedPreferences.getInstance();
+    String? n = sref.getString('name');
+    setState(() {
+    uname = n!;  
+    });
+    
+  }
+
+  void _click() {
+    setState(()async {
+    String name = txt1.text;
+    SharedPreferences srf = await SharedPreferences.getInstance();
+    await srf.setString('name', name);
+    });
+  }
+
+
+
+  TextEditingController txt1 = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Second task"),
+        centerTitle: true,
+      ),
+      body: Center(
+        child:
+            Padding(padding: EdgeInsets.all(10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextField(
+                  controller: txt1,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(13)
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20,),
+                ElevatedButton(
+                  onPressed: _click,
+                   child: const Text("Click me")
+                ),
+
+                const SizedBox(height: 10,),
+
+                ElevatedButton(
+                  onPressed: _getvalue,
+                   child: Text("Get name")
+                ),
+                
+                const SizedBox(height: 10,),
+                Text('$uname')
+
+              ],
+            ),
+          )
+        ),
+    );
+  }
+}

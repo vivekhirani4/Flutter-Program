@@ -1,0 +1,57 @@
+import 'package:flutter/material.dart';
+
+void main(){
+  runApp(Myapp());
+}
+
+class Myapp extends StatelessWidget {
+  const Myapp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.deepPurple
+      ),
+      home: Scroll_demo(),
+    );
+  }
+}
+
+class Scroll_demo extends StatefulWidget {
+  const Scroll_demo({super.key});
+
+  @override
+  State<Scroll_demo> createState() => _Scroll_demoState();
+}
+
+class _Scroll_demoState extends State<Scroll_demo> {
+
+  double _value = 1;
+  
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Scroll Bar"),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          Slider(
+          value: _value,
+          min: 1,
+          max: 10,
+          thumbColor: Colors.green,
+          activeColor: Colors.deepPurpleAccent,
+           onChanged: (double value){
+            _value = value;          
+           }
+          ),
+          Text("$_value")
+        ],
+      ),
+    );
+  }
+}
