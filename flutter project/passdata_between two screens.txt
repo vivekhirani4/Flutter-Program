@@ -1,0 +1,88 @@
+ import 'package:flutter/material.dart';
+
+import 'second_page.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  TextEditingController txt1 = TextEditingController();
+  TextEditingController txt2 = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Pass data '),
+      ),
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.all(19),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              TextField(
+                controller: txt1,
+              ),
+              SizedBox(
+                height: 23,
+              ),
+              TextField(
+                controller: txt2,
+              ),
+              SizedBox(
+                height: 23,
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SecondPage(
+                          name: txt1.text,
+                          email: txt2.text,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Text('pass data'))
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+class SecondPage extends StatelessWidget {
+  const SecondPage({super.key ,required this.name ,required this.email});
+
+  final String name;
+  final String email;
+
+  @override
+  Widget build(BuildContext context)
+  {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          children: [
+            Text('name = $name'),
+            SizedBox(height: 23,),
+            Text('name = $email'),            
+          ],
+        ),
+      ),
+    );
+  }
+}
