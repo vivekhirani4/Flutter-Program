@@ -1,0 +1,70 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+class TestGrideview extends StatefulWidget {
+  const TestGrideview({super.key});
+
+  @override
+  State<TestGrideview> createState() => TestGrideviewState();
+}
+
+class TestGrideviewState extends State<TestGrideview> {
+  var mylist = [];
+
+  Future? myfuture;
+
+  Future<List> _fetchdata() async {
+    var url = Uri.https('jsonplaceholder.typicode.com','/photos');
+    var response = await http.get(url);
+
+    print('response code = ${response.statusCode}');
+
+    mylist = json.decode(response.body);
+
+    return mylist;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    myfuture = _fetchdata();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Test gridview'),
+        centerTitle: true,
+      ),
+      body: FutureBuilder<dynamic>(
+        future: myfuture,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (snapshot.hasError) {
+            return Center(
+              child: Text('has some error'),
+            );
+          }
+          return GridView.builder(
+            gridDelegate:
+                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            itemCount: snapshot.data.length,
+            itemBuilder: (context, index) {
+              return Card(
+                child: Image.network(snapshot.data[index]['url']),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
